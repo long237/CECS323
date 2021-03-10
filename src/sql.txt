@@ -1,0 +1,30 @@
+--/*Table structure for table writing groups */
+create table writingGroups (
+    groupName varchar(10) not null,
+    headWriter varchar(20) not null,
+    yearFormed date not null,
+    subject varchar(20) not null,
+    constraint groupName_pk primary key (groupName)
+);
+
+--/*Table structure for table publisher */
+create table publishers(
+    publisherName varchar(20) not null,
+    publisherAddress varchar(30) not null,
+    publisherPhone varchar(10) not null,
+    publisherEmail varchar(30) not null,
+    constraint publisherName_pk primary key (publisherName)
+);
+
+--/*Table structure for table books */
+create table books(
+    groupName varchar(10) not null,
+    bookTitle varchar(20) not null,
+    publisherName varchar(20) not null,
+    yearPublished date not null,
+    numberPages varchar(5) not null,
+    constraint bookDesc_pk primary key (bookTitle, groupName),
+    constraint groupName_fk foreign key (groupName) references writingGroups (groupName),
+    constraint publisherName_fk foreign key (publisherName) references publishers (publisherName)   
+--add in cks 
+);

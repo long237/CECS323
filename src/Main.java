@@ -25,7 +25,14 @@ public class Main {
         UserInterface UIobj = new UserInterface();
 
         //Asking for DB name
-        getDBname();
+        DBNAME = getDBname();
+        //Asking for username
+        UIobj.printNameprompt();
+        USER = getUserName();
+        //Asking for password:
+        UIobj.printPassprompt();
+        PASS = getUserName();
+        
     }
     
     //fixme this works even for no database name;
@@ -34,6 +41,17 @@ public class Main {
         String user_input = "-1";
         while (user_input == "-1" || user_input.length() < 1){
             UIobj.printDBprompt();
+            user_input = UIobj.getUserInput();
+        }
+        return user_input;
+    }
+    
+    public static String getUserName(){
+        UserInterface UIobj = new UserInterface();
+        String user_input = "-1";
+        //username can be empty
+        while (user_input == "-1"){
+            //UIobj.printDBprompt();
             user_input = UIobj.getUserInput();
         }
         return user_input;

@@ -22,6 +22,10 @@ public class UserInterface {
     public void printPassprompt(){
         System.out.println("Enter a password: ");
     }
+    
+    public void printMenu(){
+        System.out.println("Print the menu");
+    }
         
     public String getUserInput(){
         Scanner in = new Scanner(System.in);
