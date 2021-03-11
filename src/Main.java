@@ -33,6 +33,31 @@ public class Main {
         UIobj.printPassprompt();
         PASS = getUserName();
         
+        //Building String for connection
+        DB_URL = DB_URL + DBNAME + ";user="+ USER + ";password=" + PASS;
+        Connection conn = null; //initialize the connection
+        Statement stmt = null;  //initialize the statement that we're using
+        
+        try{
+            //STEP 2: Register JDBC driver
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            
+            //Established connection to the database
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL);
+            
+            System.out.println("Connect to " + DBNAME + " user: " + USER + " password: " + PASS);
+            
+            conn.close();
+        }
+        catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } 
+        catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }
     }
     
     //fixme this works even for no database name;
