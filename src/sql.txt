@@ -28,3 +28,19 @@ create table books(
     constraint publisherName_fk foreign key (publisherName) references publishers (publisherName)   
 --add in cks 
 );
+
+/*Data for Writing Groups */
+insert into writinggroups (groupname, headwriter, yearformed, subject) values
+('WSB', 'John', '2013-01-06', 'Stocks');
+
+/*Data for publishers */
+insert into publishers (publishername, publisheraddress,publisherphone, publisheremail) values
+('Reddit', 'Reddit.com', '1234567890', 'reddit@gmail.com');
+
+/*Data for Books*/
+insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPages) values
+('WSB', 'To The Moon', 'Reddit', '2021-01-02', '300');
+
+select * from writinggroups;
+select * from books;
+select * from publishers;

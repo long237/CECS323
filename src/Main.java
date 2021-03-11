@@ -48,6 +48,15 @@ public class Main {
             
             System.out.println("Connect to " + DBNAME + " user: " + USER + " password: " + PASS);
             
+            stmt = conn.createStatement();
+            String sql = "Select booktitle from books";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                String n = rs.getString("booktitle");
+                System.out.println(n);
+                
+            }
+            
             conn.close();
         }
         catch (SQLException se) {
