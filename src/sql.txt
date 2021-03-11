@@ -11,7 +11,7 @@ create table writingGroups (
 create table publishers(
     publisherName varchar(20) not null,
     publisherAddress varchar(30) not null,
-    publisherPhone varchar(10) not null,
+    publisherPhone varchar(20) not null,
     publisherEmail varchar(30) not null,
     constraint publisherName_pk primary key (publisherName)
 );
@@ -29,17 +29,31 @@ create table books(
 --add in cks 
 );
 
+ALTER TABLE publishers
+ALTER COLUMN publisherPhone VARCHAR(20) not null;
+
+drop table publishers;
+
+ALTER TABLE books
+DROP CONSTRAINT publisherName_fk;
+
+ALTER TABLE books
+ADD CONSTRAINT  publisherName_fk foreign key (publisherName) references publishers (publisherName);
+
 /*Data for Writing Groups */
 insert into writinggroups (groupname, headwriter, yearformed, subject) values
 ('WSB', 'John', '2013-01-06', 'Stocks');
 
 /*Data for publishers */
 insert into publishers (publishername, publisheraddress,publisherphone, publisheremail) values
-('Reddit', 'Reddit.com', '1234567890', 'reddit@gmail.com');
+('Reddit', 'Reddit.com', '123-456-7890', 'reddit@gmail.com');
 
 /*Data for Books*/
 insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPages) values
 ('WSB', 'To The Moon', 'Reddit', '2021-01-02', '300');
+
+DELETE FROM publishers
+where publisherName = 'Reddit';
 
 select * from writinggroups;
 select * from books;

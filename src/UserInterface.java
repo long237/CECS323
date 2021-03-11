@@ -26,6 +26,10 @@ public class UserInterface {
     public void printMenu(){
         System.out.println("Print the menu");
     }
+    
+    public void printAttri(){
+        System.out.println("Enter an attribute to display (N to stop): ");
+    }
         
     public String getUserInput(){
         Scanner in = new Scanner(System.in);

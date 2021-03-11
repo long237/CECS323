@@ -10,6 +10,7 @@
  */
 import java.sql.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
     static String USER;
@@ -57,6 +58,19 @@ public class Main {
                 
             }
             
+            System.out.println("Printing col ....");
+            ArrayList colList = getColName(conn);
+            System.out.println(colList);
+            
+            ArrayList uattList = getPubAtt();
+            System.out.println("");
+            System.out.println(uattList);
+            
+            System.out.println("");
+            System.out.println("Check for validity: ");
+            System.out.println(checkAttri(uattList, colList));
+                   
+            
             conn.close();
         }
         catch (SQLException se) {
@@ -90,6 +104,68 @@ public class Main {
         }
         return user_input;
     }
+    
+    public static ResultSet getPublisher(Connection conn){
+//        try{
+//            PreparedStatement pStmt = null;
+//            //pStmt = conn.prepareStatement(select );
+//            
+//        }
+//        catch (SQLException se) {
+//            //Handle errors for JDBC
+//            se.printStackTrace();
+//            return null;
+//        }   
+        return null;
+    }
+    
+    //Obtain all of the attributes name of the three sets. 
+    public static ArrayList getColName(Connection conn){
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("Select * from writingGroups natural join Books natural join Publishers");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            
+            ArrayList colList = new ArrayList<String>();
+            int numCol = rsmd.getColumnCount();
+            for (int i = 1; i <= numCol; i++){
+                colList.add(rsmd.getColumnName(i));
+            }
+            return colList;
+        }
+        catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        }   
+    }
+    
+    public static ArrayList getPubAtt(){
+        ArrayList userList = new ArrayList<String>();
+        UserInterface UIobj = new UserInterface();
+        String user_input = "-1";
+        //username can be empty
+        while (user_input.equals("-1") || !(user_input.equals("N"))){
+            UIobj.printAttri();
+            user_input = UIobj.getUserInput();
+            if(!(user_input.equals("N"))){
+                userList.add(user_input);
+            }
+        }
+        return userList;
+    }
+    
+    public static boolean checkAttri(ArrayList<String> user_input, ArrayList<String> attriList){
+        for (int i = 0; i < user_input.size(); i++){
+            String userUpper = user_input.get(i).toUpperCase();
+            if (!(attriList.contains(userUpper))){
+                return false;
+            }
+        }
+        return true;
+        
+    }
+        
     
     //making sure this is working
     
