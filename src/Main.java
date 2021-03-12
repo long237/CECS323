@@ -66,6 +66,11 @@ public class Main {
             String userPub = getUserInput();
             ResultSet rs2 = getPublisher(conn, userPub);
             UIobj.printResultSet(rs2);
+            
+            //Testing get all book titles functions:
+            System.out.println("");
+            ResultSet rs3 = getAllBooks(conn);
+            UIobj.printResultSet(rs3);
 
             // System.out.println("Printing col ....");
             // ArrayList colList = getColName(conn);
@@ -122,6 +127,20 @@ public class Main {
             ResultSet rs = pStmt.executeQuery();
             return rs;
         } catch (SQLException se) {
+            // Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static ResultSet getAllBooks(Connection conn){
+        try{
+            String sql = "SELECT booktitle FROM Books ";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            return rs;
+        }
+        catch (SQLException se) {
             // Handle errors for JDBC
             se.printStackTrace();
             return null;
