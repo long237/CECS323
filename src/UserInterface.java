@@ -9,6 +9,7 @@
  * @author Chunchunmaru
  */
 import java.util.Scanner;
+import java.sql.*;
 public class UserInterface {
     
     public void printNameprompt(){
@@ -44,6 +45,22 @@ public class UserInterface {
         }
     }
     
-
+    public void printResultSet(ResultSet rs){
+        try{
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numCol = rsmd.getColumnCount();
+            while (rs.next()){
+                for (int i = 1; i <= numCol; i++){
+                    String colValue = rs.getString(i);
+                    System.out.println(colValue + " " + rsmd.getColumnName(i));
+                }
+            }
+        }
+        catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }   
+        
+    }
     
 }

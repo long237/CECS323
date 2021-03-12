@@ -26,7 +26,8 @@ public class Main {
         UserInterface UIobj = new UserInterface();
 
         //Asking for DB name
-        DBNAME = getDBname();
+        UIobj.printDBprompt();
+        DBNAME = getUserInput();
         //Asking for username
         UIobj.printNameprompt();
         USER = getUserName();
@@ -50,25 +51,39 @@ public class Main {
             System.out.println("Connect to " + DBNAME + " user: " + USER + " password: " + PASS);
             
             stmt = conn.createStatement();
-            String sql = "Select booktitle from books";
+            //String sql = "Select booktitle from books";
+            String sql = "Select * from publishers natural join books natural join WritingGroups";
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()){
-                String n = rs.getString("booktitle");
-                System.out.println(n);
-                
-            }
+//            while (rs.next()){
+//                String n = rs.getString("booktitle");
+//                System.out.println(n);
+//                
+//            }
+            UIobj.printResultSet(rs);
             
-            System.out.println("Printing col ....");
-            ArrayList colList = getColName(conn);
-            System.out.println(colList);
-            
-            ArrayList uattList = getPubAtt();
+            //Testing getting publisher function
             System.out.println("");
-            System.out.println(uattList);
+            System.out.println("Enter pub name: ");
+            String userPub = getUserInput();
+            ResultSet rs2 = getPublisher(conn, userPub);
+            UIobj.printResultSet(rs2);
             
-            System.out.println("");
-            System.out.println("Check for validity: ");
-            System.out.println(checkAttri(uattList, colList));
+//            System.out.println("Printing col ....");
+//            ArrayList colList = getColName(conn);
+//            System.out.println(colList);
+//            
+//            //Testing searching for specific publisher
+//            System.out.println("Enter a publisher name to look up: ");
+            
+            
+//            ArrayList uattList = getPubAtt();
+//            System.out.println("");
+//            System.out.println(uattList);
+//            
+//            System.out.println("");
+//            System.out.println("Check for validity: ");
+//            System.out.println(checkAttri(uattList, colList));
+
                    
             
             conn.close();
@@ -84,11 +99,10 @@ public class Main {
     }
     
     //fixme this works even for no database name;
-    public static String getDBname(){
+    public static String getUserInput(){
         UserInterface UIobj = new UserInterface();
         String user_input = "-1";
         while (user_input == "-1" || user_input.length() < 1){
-            UIobj.printDBprompt();
             user_input = UIobj.getUserInput();
         }
         return user_input;
@@ -105,18 +119,19 @@ public class Main {
         return user_input;
     }
     
-    public static ResultSet getPublisher(Connection conn){
-//        try{
-//            PreparedStatement pStmt = null;
-//            //pStmt = conn.prepareStatement(select );
-//            
-//        }
-//        catch (SQLException se) {
-//            //Handle errors for JDBC
-//            se.printStackTrace();
-//            return null;
-//        }   
-        return null;
+    public static ResultSet getPublisher(Connection conn, String pubName){
+        try{          
+            PreparedStatement pStmt = conn.prepareStatement("select * from publishers natural join books natural join WritingGroups where PublisherName = ? ");
+            pStmt.clearParameters();
+            pStmt.setString(1, pubName);
+            ResultSet rs = pStmt.executeQuery();
+            return rs;
+        }
+        catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        }   
     }
     
     //Obtain all of the attributes name of the three sets. 
