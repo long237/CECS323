@@ -43,14 +43,20 @@ ADD CONSTRAINT  publisherName_fk foreign key (publisherName) references publishe
 /*Data for Writing Groups */
 insert into writinggroups (groupname, headwriter, yearformed, subject) values
 ('WSB', 'John', '2013-01-06', 'Stocks');
+insert into writinggroups (groupname, headwriter, yearformed, subject) values
+('GME', 'Apes', '2014-01-06', 'Meme Stocks');
 
 /*Data for publishers */
 insert into publishers (publishername, publisheraddress,publisherphone, publisheremail) values
 ('Reddit', 'Reddit.com', '123-456-7890', 'reddit@gmail.com');
+insert into publishers (publishername, publisheraddress,publisherphone, publisheremail) values
+('Twitter', 'Twitter.com', '222-333-2323', 'Twitter@gmail.com');
 
 /*Data for Books*/
 insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPages) values
 ('WSB', 'To The Moon', 'Reddit', '2021-01-02', '300');
+insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPages) values
+('WSB', 'Diamond Hands', 'Reddit', '2021-02-02', '400');
 
 DELETE FROM publishers
 where publisherName = 'Reddit';
