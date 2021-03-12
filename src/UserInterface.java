@@ -1,4 +1,6 @@
-/*
+//package CECS323.src;
+
+/** 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,57 +12,135 @@
  */
 import java.util.Scanner;
 import java.sql.*;
+
 public class UserInterface {
-    
-    public void printNameprompt(){
+
+    public void printNameprompt() {
         System.out.println("Enter a username: ");
     }
-    
-    public void printDBprompt(){
+
+    public void printDBprompt() {
         System.out.println("Enter a database name: ");
     }
-    
-    public void printPassprompt(){
+
+    public void printPassprompt() {
         System.out.println("Enter a password: ");
     }
-    
-    public void printMenu(){
+
+    public void printMenu() {
         System.out.println("Print the menu");
     }
-    
-    public void printAttri(){
+
+    public void printAttri() {
         System.out.println("Enter an attribute to display (N to stop): ");
     }
-        
-    public String getUserInput(){
+
+    public String getUserInput() {
         Scanner in = new Scanner(System.in);
         String user_input = "";
-        try{
+        try {
             user_input = in.nextLine();
             return user_input;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Invalid input, please try again.");
             return "-1";
         }
     }
-    
-    public void printResultSet(ResultSet rs){
-        try{
+
+    public void printResultSet(ResultSet rs) {
+        try {
             ResultSetMetaData rsmd = rs.getMetaData();
             int numCol = rsmd.getColumnCount();
-            while (rs.next()){
-                for (int i = 1; i <= numCol; i++){
+            while (rs.next()) {
+                for (int i = 1; i <= numCol; i++) {
                     String colValue = rs.getString(i);
                     System.out.println(colValue + " " + rsmd.getColumnName(i));
                 }
             }
-        }
-        catch (SQLException se) {
-            //Handle errors for JDBC
+        } catch (SQLException se) {
+            // Handle errors for JDBC
             se.printStackTrace();
-        }   
-        
+        }
+
     }
-    
+
+    // List all writing groups
+    public static void listWritingGroup(Connection conn, Statement stmt) {
+        try {
+            String WritingGroupscol = "Select * from WritingGroups";
+            ResultSet rs = stmt.executeQuery(WritingGroupscol);
+
+            while (rs.next()) {
+                String wgName = rs.getString("GroupName");
+                String wgWriter = rs.getString("HeadWriter");
+                String wgYear = rs.getString("YearFormed");
+                String wgSubject = rs.getString("Subject");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // List all the data for a group specified by the user
+    // ! This includes all the data for the associated books and publishers
+    public static void listDataGroup(Connection conn, Statement stmt) {
+        Scanner in = new Scanner(System.in);
+        int loop = 1;
+        while (loop == 1) {
+            try {
+                System.out.println("Choose a data group to be listed: ");
+                String DataGroupcol = in.nextLine();
+                if (DataGroupcol == "WritingGroups") {
+                    loop = 0;
+                    listDataGroup(conn, stmt);
+                } else if (DataGroupcol == "Book") {
+                    loop = 0;
+                    listBook(conn, stmt);
+                } else if (DataGroupcol == "Publisher") {
+                    loop = 0;
+                    listPublishers(conn, stmt);
+                } else {
+                    System.out.println("Invalid input, please try again!");
+                }
+
+                ResultSet rs = stmt.executeQuery(DataGroupcol);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+    }
+
+    // List all publishers
+    public static void listPublishers(Connection conn, Statement stmt) {
+        try {
+            String ListPublisherscol = "String * from ListPublishers";
+            ResultSet rs = stmt.executeQuery(ListPublisherscol);
+
+            while (rs.next()) {
+                String pName = rs.getString("PublisherName");
+                String pAddress = rs.getString("PublisherAddress");
+                String pPhone = rs.getString("PublisherPhone");
+                String pEmail = rs.getString("PublisherEmail");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static void listBook(Connection conn, Statement stmt) {
+        try {
+            String ListPublisherscol = "String * from Book";
+            ResultSet rs = stmt.executeQuery(ListPublisherscol);
+
+            while (rs.next()) {
+                String bBookTitle = rs.getString("BookTitle");
+                String pYearPublished = rs.getString("YearPublished");
+                String bNumberPages = rs.getString("NumberPages");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
 }
