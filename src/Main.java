@@ -71,6 +71,15 @@ public class Main {
             System.out.println("");
             ResultSet rs3 = getAllBooks(conn);
             UIobj.printResultSet(rs3);
+            
+            //Testing getting a single book: 
+            System.out.println("");
+            System.out.println("Enter a book title: ");
+            String uTitle = getUserInput();
+            System.out.println("Enter a Group Name: ");
+            String uGroup = getUserInput();
+            ResultSet rs4 = getBook(conn, uTitle, uGroup);
+            UIobj.printResultSet(rs4);
 
             // System.out.println("Printing col ....");
             // ArrayList colList = getColName(conn);
@@ -133,11 +142,28 @@ public class Main {
         }
     }
     
+    //Return a result set of all of the title of the books
     public static ResultSet getAllBooks(Connection conn){
         try{
             String sql = "SELECT booktitle FROM Books ";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
+            return rs;
+        }
+        catch (SQLException se) {
+            // Handle errors for JDBC
+            se.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static ResultSet getBook(Connection conn, String uTitle, String uGroupName){
+        try{
+            PreparedStatement pStmt = conn.prepareStatement(
+                    "Select * from Books where BookTitle = ? or GroupName = ?");
+            pStmt.setString(1, uTitle);
+            pStmt.setString(2, uGroupName);
+            ResultSet rs = pStmt.executeQuery();
             return rs;
         }
         catch (SQLException se) {

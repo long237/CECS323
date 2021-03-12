@@ -27,7 +27,7 @@ public class list3 {
             System.out.println("Creating statement...");
             stmt = con.createStatement();
             // List all writing groups
-            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM WritingGroups")
+            ResultSet rs1 = stmt1.executeQuery("SELECT * FROM WritingGroups");
             while (rs1.next()) {
                 System.out.println(rs1.getString("GroupName")+", "+rs1.getString("HeadWriter")+", "+rs1.getString("YearFormed")+", "+rs1.getString("Subject"));
             }
