@@ -130,10 +130,13 @@ public class Main {
     public static ResultSet getPublisher(Connection conn, String pubName) {
         try {
             PreparedStatement pStmt = conn.prepareStatement(
-                    "select * from publishers natural join books natural join WritingGroups where PublisherName = ? ");
+                    "select * from publishers left outer join books using (PublisherName) "
+                            + "left outer join WritingGroups using (groupname)"
+                            + "where PublisherName = ?");
             pStmt.clearParameters();
             pStmt.setString(1, pubName);
             ResultSet rs = pStmt.executeQuery();
+            System.out.println("Execute successfully");
             return rs;
         } catch (SQLException se) {
             // Handle errors for JDBC
