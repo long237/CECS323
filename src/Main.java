@@ -80,6 +80,21 @@ public class Main {
             String uGroup = getUserInput();
             ResultSet rs4 = getBook(conn, uTitle, uGroup);
             UIobj.printResultSet(rs4);
+            
+            //Testing inserting a Publisher to the table. 
+            System.out.println("");
+            System.out.println("Enter a publisher name: ");
+            String uPubName = getUserInput();
+            System.out.println("Enter the publisher address: ");
+            String uAddr = getUserInput();
+            System.out.println("Enter publisher phone: ");
+            String uPhone = getUserInput();
+            System.out.println("Enter publisher email: ");
+            String uEmail = getUserInput();
+            Boolean result = insertPub(conn, uPubName, uAddr, uPhone, uEmail);
+            if (result){
+                System.out.println("Insert new publisher succesful");
+            }
 
             // System.out.println("Printing col ....");
             // ArrayList colList = getColName(conn);
@@ -127,6 +142,7 @@ public class Main {
         return user_input;
     }
 
+    //This function will also display any Publisher that have yet to publish a book. 
     public static ResultSet getPublisher(Connection conn, String pubName) {
         try {
             PreparedStatement pStmt = conn.prepareStatement(
@@ -220,6 +236,31 @@ public class Main {
         }
         return true;
 
+    }
+    
+    public static boolean buyOutPub(Connection conn, String uPubName, String ubuyOut){
+        return true;
+    }
+    
+    public static boolean insertPub(Connection conn, String uPubName, String uPubAddr, String uPhone, String uEmail){
+        try{
+            PreparedStatement pStmt = conn.prepareStatement("Insert into Publishers(PublisherName, PublisherAddress, PublisherPhone, PublisherEmail) values"
+                    + "(?, ?, ?, ?) ");
+            pStmt.clearParameters();
+            pStmt.setString(1, uPubName);
+            pStmt.setString(2, uPubAddr);
+            pStmt.setString(3, uPhone);
+            pStmt.setString(4, uEmail);
+            int numRes = pStmt.executeUpdate();
+            return true;
+            
+        }
+        catch (SQLException se) {
+            // Handle errors for JDBC
+            se.printStackTrace();
+            System.out.println("Inserting publisher name failed. ");
+            return false;
+        }
     }
 
     // making sure this is working
