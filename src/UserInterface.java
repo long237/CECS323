@@ -84,7 +84,6 @@ public class UserInterface {
     // List all the data for a group specified by the user
     // ! This includes all the data for the associated books and publishers
     public static void specifiedData(Connection conn, Statement stmt) {
-        Scanner in = new Scanner(System.in);
         try {
             // Books natural join writingGroups
             ResultSet rs = stmt.executeQuery("select * from Books " + "natural join " + "WritingGroups");
@@ -106,10 +105,18 @@ public class UserInterface {
     }
 
     // where clause = ?
-    public static void whereClause(Connection conn, Statement stmt) {
+    public static void whereClause(Connection conn, Statement stmt, ResultSet rs) {
         Scanner in = new Scanner(System.in);
         try {
-            String whereC = "select * from ? where ?";
+            String whereC = "select * from WritingGroups" + " where YearFormed >= ?";
+            PreparedStatement pstmt = conn.prepareStatement(whereC);
+            pstmt.setInt(1, 2000);
+            rs = pstmt.executeQuery();
+            System.out.println("Writing groups that formed after the year 2000: ");
+            while (rs.next()) {
+                System.out.print("Group name: " + rs.getString("wgName"));
+                System.out.print("Year Formed: " + rs.getString("wgYear") + "\n");
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
