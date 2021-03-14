@@ -60,26 +60,27 @@ public class Main {
             // }
             UIobj.printResultSet(rs);
 
-            // Testing getting publisher function
-            System.out.println("");
-            System.out.println("Enter pub name: ");
-            String userPub = getUserInput();
-            ResultSet rs2 = getPublisher(conn, userPub);
-            UIobj.printResultSet(rs2);
-            
-            //Testing get all book titles functions:
-            System.out.println("");
-            ResultSet rs3 = getAllBooks(conn);
-            UIobj.printResultSet(rs3);
-            
-            //Testing getting a single book: 
-            System.out.println("");
-            System.out.println("Enter a book title: ");
-            String uTitle = getUserInput();
-            System.out.println("Enter a Group Name: ");
-            String uGroup = getUserInput();
-            ResultSet rs4 = getBook(conn, uTitle, uGroup);
-            UIobj.printResultSet(rs4);
+//            // Testing getting publisher function
+//            System.out.println("");
+//            System.out.println("Enter pub name: ");
+//            String userPub = getUserInput();
+//            ResultSet rs2 = getPublisher(conn, userPub);
+//            UIobj.printResultSet(rs2);
+//            
+//            //Testing get all book titles functions:
+//            System.out.println("");
+//            System.out.println("Testing print all book titles");
+//            ResultSet rs3 = getAllBooks(conn);
+//            UIobj.printResultSet(rs3);
+//            
+//            //Testing getting a single book: 
+//            System.out.println("");
+//            System.out.println("Enter a book title: ");
+//            String uTitle = getUserInput();
+//            System.out.println("Enter a Group Name: ");
+//            String uGroup = getUserInput();
+//            ResultSet rs4 = getBook(conn, uTitle, uGroup);
+//            UIobj.printResultSet(rs4);
             
             //Testing inserting a Publisher to the table. 
             System.out.println("");
@@ -94,6 +95,13 @@ public class Main {
             Boolean result = insertPub(conn, uPubName, uAddr, uPhone, uEmail);
             if (result){
                 System.out.println("Insert new publisher succesful");
+            }
+            System.out.println("Enter the name of the publisher being replaced: ");
+            System.out.println("");
+            String oldName = getUserInput();
+            Boolean buyRes = buyOutPub(conn, uPubName, oldName);
+            if (buyRes){
+                System.out.println("Update books publishername successfully");
             }
 
             // System.out.println("Printing col ....");
@@ -238,8 +246,23 @@ public class Main {
 
     }
     
-    public static boolean buyOutPub(Connection conn, String uPubName, String ubuyOut){
-        return true;
+    public static boolean buyOutPub(Connection conn, String newName, String oldName){
+        try{
+            PreparedStatement pStmt = conn.prepareStatement("UPDATE Books SET publisherName = ? WHERE publisherName = ?");
+            pStmt.clearParameters();
+            //the new name of the publisher 
+            pStmt.setString(1, newName);
+            //Specifies the publisher name to be change
+            pStmt.setString(2, oldName);
+            int res = pStmt.executeUpdate();
+            return true;
+        }
+         catch (SQLException se) {
+            // Handle errors for JDBC
+            se.printStackTrace();
+            System.out.println("Buying out a publisher operation failed !!!");
+            return false;
+        }
     }
     
     public static boolean insertPub(Connection conn, String uPubName, String uPubAddr, String uPhone, String uEmail){
