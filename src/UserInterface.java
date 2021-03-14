@@ -1,4 +1,3 @@
-package CECS323.src;
 
 /** 
  * To change this license header, choose License Headers in Project Properties.
@@ -65,19 +64,23 @@ public class UserInterface {
     }
 
     // List all writing groups
-    public static void listWritingGroup(Connection conn, Statement stmt) {
+    public ResultSet listWritingGroup(Connection conn) {
         try {
+            Statement stmt = conn.createStatement();
             String WritingGroupscol = "Select * from WritingGroups";
             ResultSet rs = stmt.executeQuery(WritingGroupscol);
-
-            while (rs.next()) {
-                String wgName = rs.getString("GroupName");
-                String wgWriter = rs.getString("HeadWriter");
-                String wgYear = rs.getString("YearFormed");
-                String wgSubject = rs.getString("Subject");
-            }
+            return rs;
+//            while (rs.next()) {
+//                String wgName = rs.getString("GroupName");
+//                String wgWriter = rs.getString("HeadWriter");
+//                String wgYear = rs.getString("YearFormed");
+//                String wgSubject = rs.getString("Subject");
+//                
+//                System.out.println(wgName);
+//            }
         } catch (Exception e) {
             System.out.println(e);
+            return null;
         }
     }
 

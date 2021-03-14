@@ -61,11 +61,11 @@ public class Main {
             UIobj.printResultSet(rs);
 
 //            // Testing getting publisher function
-//            System.out.println("");
-//            System.out.println("Enter pub name: ");
-//            String userPub = getUserInput();
-//            ResultSet rs2 = getPublisher(conn, userPub);
-//            UIobj.printResultSet(rs2);
+            System.out.println("");
+            System.out.println("Enter pub name: ");
+            String userPub = getUserInput();
+            ResultSet rs2 = getPublisher(conn, userPub);
+            UIobj.printResultSet(rs2);
 //            
 //            //Testing get all book titles functions:
 //            System.out.println("");
@@ -83,26 +83,30 @@ public class Main {
 //            UIobj.printResultSet(rs4);
             
             //Testing inserting a Publisher to the table. 
+//            System.out.println("");
+//            System.out.println("Enter a publisher name: ");
+//            String uPubName = getUserInput();
+//            System.out.println("Enter the publisher address: ");
+//            String uAddr = getUserInput();
+//            System.out.println("Enter publisher phone: ");
+//            String uPhone = getUserInput();
+//            System.out.println("Enter publisher email: ");
+//            String uEmail = getUserInput();
+//            Boolean result = insertPub(conn, uPubName, uAddr, uPhone, uEmail);
+//            if (result){
+//                System.out.println("Insert new publisher succesful");
+//            }
+//            System.out.println("Enter the name of the publisher being replaced: ");
+//            System.out.println("");
+//            String oldName = getUserInput();
+//            Boolean buyRes = buyOutPub(conn, uPubName, oldName);
+//            if (buyRes){
+//                System.out.println("Update books publishername successfully");
+//            }
             System.out.println("");
-            System.out.println("Enter a publisher name: ");
-            String uPubName = getUserInput();
-            System.out.println("Enter the publisher address: ");
-            String uAddr = getUserInput();
-            System.out.println("Enter publisher phone: ");
-            String uPhone = getUserInput();
-            System.out.println("Enter publisher email: ");
-            String uEmail = getUserInput();
-            Boolean result = insertPub(conn, uPubName, uAddr, uPhone, uEmail);
-            if (result){
-                System.out.println("Insert new publisher succesful");
-            }
-            System.out.println("Enter the name of the publisher being replaced: ");
-            System.out.println("");
-            String oldName = getUserInput();
-            Boolean buyRes = buyOutPub(conn, uPubName, oldName);
-            if (buyRes){
-                System.out.println("Update books publishername successfully");
-            }
+            System.out.println("Rifat");
+            ResultSet rs3 = UIobj.listWritingGroup(conn);
+            UIobj.printResultSet(rs3);
 
             // System.out.println("Printing col ....");
             // ArrayList colList = getColName(conn);
