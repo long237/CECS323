@@ -1,4 +1,4 @@
-//package CECS323.src;
+package CECS323.src;
 
 /** 
  * To change this license header, choose License Headers in Project Properties.
@@ -83,6 +83,46 @@ public class UserInterface {
 
     // List all the data for a group specified by the user
     // ! This includes all the data for the associated books and publishers
+    public static void specifiedData(Connection conn, Statement stmt) {
+        try {
+            // Books natural join writingGroups
+            ResultSet rs = stmt.executeQuery("select * from Books " + "natural join " + "WritingGroups");
+            System.out.println("GroupName " + "HeadWriter " + " YearFormed" + " Subject" + " BookTitle"
+                    + " YearPublished" + " NumberPages");
+            while (rs.next()) {
+                String wgName = rs.getString("GroupName");
+                String wgWriter = rs.getString("HeadWriter");
+                String wgYear = rs.getString("YearFormed");
+                String wgSubject = rs.getString("Subject");
+
+                String bBookTitle = rs.getString("BookTitle");
+                String pYearPublished = rs.getString("YearPublished");
+                String bNumberPages = rs.getString("NumberPages");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // where clause = ?
+    public static void whereClause(Connection conn, Statement stmt, ResultSet rs) {
+        Scanner in = new Scanner(System.in);
+        try {
+            String whereC = "select * from WritingGroups" + " where YearFormed >= ?";
+            PreparedStatement pstmt = conn.prepareStatement(whereC);
+            pstmt.setInt(1, 2000);
+            rs = pstmt.executeQuery();
+            System.out.println("Writing groups that formed after the year 2000: ");
+            while (rs.next()) {
+                System.out.print("Group name: " + rs.getString("wgName"));
+                System.out.print("Year Formed: " + rs.getString("wgYear") + "\n");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // extra method to list a data group specified by user
     public static void listDataGroup(Connection conn, Statement stmt) {
         Scanner in = new Scanner(System.in);
         int loop = 1;
@@ -93,7 +133,7 @@ public class UserInterface {
                 if (DataGroupcol == "WritingGroups") {
                     loop = 0;
                     listDataGroup(conn, stmt);
-                } else if (DataGroupcol == "Book") {
+                } else if (DataGroupcol == "Books") {
                     loop = 0;
                     listBook(conn, stmt);
                 } else if (DataGroupcol == "Publisher") {
@@ -128,9 +168,10 @@ public class UserInterface {
         }
     }
 
+    // listing books
     public static void listBook(Connection conn, Statement stmt) {
         try {
-            String ListPublisherscol = "String * from Book";
+            String ListPublisherscol = "String * from Books";
             ResultSet rs = stmt.executeQuery(ListPublisherscol);
 
             while (rs.next()) {
