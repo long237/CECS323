@@ -55,6 +55,18 @@ public class UserInterface {
             return "-1";
         }
     }
+    
+    public int getUserInt() {
+        Scanner in = new Scanner(System.in);
+        int user_input = -1;
+        try {
+            user_input = in.nextInt();
+            return user_input;
+        } catch (Exception e) {
+            System.out.println("Invalid menu option, please try again.");
+            return -1;
+        }
+    }
 
     public void printResultSet(ResultSet rs) {
         try {

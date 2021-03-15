@@ -61,12 +61,12 @@ public class Main {
             UIobj.printResultSet(rs);
 
 //            // Testing getting publisher function
-            System.out.println("");
-            System.out.println("Test getting a specific publisher");
-            System.out.println("Enter pub name: ");
-            String userPub = getUserInput();
-            ResultSet rs2 = getPublisher(conn, userPub);
-            UIobj.printResultSet(rs2);
+//            System.out.println("");
+//            System.out.println("Test getting a specific publisher");
+//            System.out.println("Enter pub name: ");
+//            String userPub = getUserInput();
+//            ResultSet rs2 = getPublisher(conn, userPub);
+//            UIobj.printResultSet(rs2);
 //            
 //            //Testing get all book titles functions:
 //            System.out.println("");
@@ -123,6 +123,41 @@ public class Main {
             // System.out.println("");
             // System.out.println("Check for validity: ");
             // System.out.println(checkAttri(uattList, colList));
+            
+            int u_opt = getMenuOpt();
+            while (u_opt != 10){
+                if (u_opt == 1){
+                    //List all writing groups
+                }
+                else if (u_opt == 2){
+                    //List a specific group
+                }
+                else if (u_opt == 3){
+                    //List all publishers
+                }
+                else if (u_opt == 4){
+                    //List specific publisher
+                }
+                else if (u_opt == 5){
+                    //List all book titles
+                }
+                else if (u_opt == 6){
+                    //List specific book
+                }
+                else if (u_opt == 7){
+                    //Insert new book
+                }
+                else if (u_opt == 8){
+                    //Insert new publisher update books
+                }
+                else if (u_opt == 9){
+                    //Remove a book
+                }
+                else if (u_opt == 10){
+                    System.out.println("Good Bye");
+                }
+            }
+            
 
             conn.close();
         } catch (SQLException se) {
@@ -139,7 +174,7 @@ public class Main {
     public static String getUserInput() {
         UserInterface UIobj = new UserInterface();
         String user_input = "-1";
-        while (user_input == "-1" || user_input.length() < 1) {
+        while (user_input.equals("-1") || user_input.length() < 1) {
             user_input = UIobj.getUserInput();
         }
         return user_input;
@@ -152,6 +187,16 @@ public class Main {
         while (user_input == "-1") {
             // UIobj.printDBprompt();
             user_input = UIobj.getUserInput();
+        }
+        return user_input;
+    }
+    
+    public static int getMenuOpt(){
+        UserInterface UIobj = new UserInterface();
+        int user_input = -1;
+        while (user_input < 1 || user_input > 10) {
+            System.out.println("Enter a menu option: ");
+            user_input = UIobj.getUserInt();
         }
         return user_input;
     }
