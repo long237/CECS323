@@ -65,19 +65,21 @@ public class UserInterface {
     }
 
     // List all writing groups
-    public static void listWritingGroup(Connection conn, Statement stmt) {
+    public ResultSet listWritingGroup(Connection conn) {
         try {
+            Statement stmt = conn.createStatement();
             String WritingGroupscol = "Select * from WritingGroups";
             ResultSet rs = stmt.executeQuery(WritingGroupscol);
-
-            while (rs.next()) {
-                String wgName = rs.getString("GroupName");
-                String wgWriter = rs.getString("HeadWriter");
-                String wgYear = rs.getString("YearFormed");
-                String wgSubject = rs.getString("Subject");
-            }
+            return rs;
+            // while (rs.next()) {
+            // String wgName = rs.getString("GroupName");
+            // String wgWriter = rs.getString("HeadWriter");
+            // String wgYear = rs.getString("YearFormed");
+            // String wgSubject = rs.getString("Subject");
+            // }
         } catch (Exception e) {
             System.out.println(e);
+            return null;
         }
     }
 
@@ -123,64 +125,71 @@ public class UserInterface {
     }
 
     // extra method to list a data group specified by user
-    public static void listDataGroup(Connection conn, Statement stmt) {
+    public void listDataGroup(Connection conn) {
         Scanner in = new Scanner(System.in);
         int loop = 1;
         while (loop == 1) {
             try {
+                Statement stmt = conn.createStatement();
                 System.out.println("Choose a data group to be listed: ");
                 String DataGroupcol = in.nextLine();
                 if (DataGroupcol == "WritingGroups") {
                     loop = 0;
-                    listDataGroup(conn, stmt);
+                    listDataGroup(conn);
                 } else if (DataGroupcol == "Books") {
                     loop = 0;
-                    listBook(conn, stmt);
+                    listBook(conn);
                 } else if (DataGroupcol == "Publisher") {
                     loop = 0;
-                    listPublishers(conn, stmt);
+                    listPublishers(conn);
                 } else {
                     System.out.println("Invalid input, please try again!");
                 }
 
                 ResultSet rs = stmt.executeQuery(DataGroupcol);
+                // return rs;
             } catch (Exception e) {
                 System.out.println(e);
+                // return null;
             }
         }
 
     }
 
     // List all publishers
-    public static void listPublishers(Connection conn, Statement stmt) {
+    public ResultSet listPublishers(Connection conn) {
         try {
             String ListPublisherscol = "String * from ListPublishers";
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(ListPublisherscol);
-
-            while (rs.next()) {
-                String pName = rs.getString("PublisherName");
-                String pAddress = rs.getString("PublisherAddress");
-                String pPhone = rs.getString("PublisherPhone");
-                String pEmail = rs.getString("PublisherEmail");
-            }
+            return rs;
+            // while (rs.next()) {
+            // String pName = rs.getString("PublisherName");
+            // String pAddress = rs.getString("PublisherAddress");
+            // String pPhone = rs.getString("PublisherPhone");
+            // String pEmail = rs.getString("PublisherEmail");
+            // }
         } catch (Exception e) {
             System.out.println(e);
+            return null;
         }
     }
 
     // listing books
-    public static void listBook(Connection conn, Statement stmt) {
+    public ResultSet listBook(Connection conn) {
         try {
             String ListPublisherscol = "String * from Books";
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(ListPublisherscol);
-
-            while (rs.next()) {
-                String bBookTitle = rs.getString("BookTitle");
-                String pYearPublished = rs.getString("YearPublished");
-                String bNumberPages = rs.getString("NumberPages");
-            }
+            return rs;
+            // while (rs.next()) {
+            // String bBookTitle = rs.getString("BookTitle");
+            // String pYearPublished = rs.getString("YearPublished");
+            // String bNumberPages = rs.getString("NumberPages");
+            // }
         } catch (Exception e) {
             System.out.println(e);
+            return null;
         }
     }
 
