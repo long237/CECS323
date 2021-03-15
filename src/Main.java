@@ -48,84 +48,11 @@ public class Main {
             conn = DriverManager.getConnection(DB_URL);
 
             System.out.println("Connect to " + DBNAME + " user: " + USER + " password: " + PASS);
-
-            stmt = conn.createStatement();
-            // String sql = "Select booktitle from books";
-            String sql = "Select * from publishers natural join books natural join WritingGroups";
-            ResultSet rs = stmt.executeQuery(sql);
-            // while (rs.next()){
-            // String n = rs.getString("booktitle");
-            // System.out.println(n);
-            //
-            // }
-            UIobj.printResultSet(rs);
-
-//            // Testing getting publisher function
-//            System.out.println("");
-//            System.out.println("Test getting a specific publisher");
-//            System.out.println("Enter pub name: ");
-//            String userPub = getUserInput();
-//            ResultSet rs2 = getPublisher(conn, userPub);
-//            UIobj.printResultSet(rs2);
-//            
-//            //Testing get all book titles functions:
-//            System.out.println("");
-//            System.out.println("Testing print all book titles");
-//            ResultSet rs3 = getAllBooks(conn);
-//            UIobj.printResultSet(rs3);
-//            
-//            //Testing getting a single book: 
-//            System.out.println("");
-//            System.out.println("Enter a book title: ");
-//            String uTitle = getUserInput();
-//            System.out.println("Enter a Group Name: ");
-//            String uGroup = getUserInput();
-//            ResultSet rs4 = getBook(conn, uTitle, uGroup);
-//            UIobj.printResultSet(rs4);
-            
-            //Testing inserting a Publisher to the table. 
-//            System.out.println("");
-//            System.out.println("Enter a publisher name: ");
-//            String uPubName = getUserInput();
-//            System.out.println("Enter the publisher address: ");
-//            String uAddr = getUserInput();
-//            System.out.println("Enter publisher phone: ");
-//            String uPhone = getUserInput();
-//            System.out.println("Enter publisher email: ");
-//            String uEmail = getUserInput();
-//            Boolean result = insertPub(conn, uPubName, uAddr, uPhone, uEmail);
-//            if (result){
-//                System.out.println("Insert new publisher succesful");
-//            }
-//            System.out.println("Enter the name of the publisher being replaced: ");
-//            System.out.println("");
-//            String oldName = getUserInput();
-//            Boolean buyRes = buyOutPub(conn, uPubName, oldName);
-//            if (buyRes){
-//                System.out.println("Update books publishername successfully");
-//            }
-//            System.out.println("");
-//            System.out.println("Rifat");
-//            ResultSet rs3 = UIobj.listWritingGroup(conn);
-//            UIobj.printResultSet(rs3);
-
-            // System.out.println("Printing col ....");
-            // ArrayList colList = getColName(conn);
-            // System.out.println(colList);
-            //
-            // //Testing searching for specific publisher
-            // System.out.println("Enter a publisher name to look up: ");
-
-            // ArrayList uattList = getPubAtt();
-            // System.out.println("");
-            // System.out.println(uattList);
-            //
-            // System.out.println("");
-            // System.out.println("Check for validity: ");
-            // System.out.println(checkAttri(uattList, colList));
-            
-            int u_opt = getMenuOpt();
+ 
+            int u_opt = -1;
             while (u_opt != 10){
+                UIobj.printMenu();
+                u_opt = getMenuOpt();
                 if (u_opt == 1){
                     //List all writing groups
                 }
@@ -136,24 +63,61 @@ public class Main {
                     //List all publishers
                 }
                 else if (u_opt == 4){
-                    //List specific publisher
+                    System.out.println("");
+                    System.out.println("Test getting a specific publisher");
+                    System.out.println("Enter pub name to display data: ");
+                    String userPub = getUserInput();
+                    ResultSet rs2 = getPublisher(conn, userPub);
+                    UIobj.printResultSet(rs2);
                 }
                 else if (u_opt == 5){
                     //List all book titles
+                    System.out.println("");
+                    System.out.println("Testing print all book titles");
+                    ResultSet rs3 = getAllBooks(conn);
+                    UIobj.printResultSet(rs3);
                 }
                 else if (u_opt == 6){
                     //List specific book
+                    System.out.println("");
+                    System.out.println("Enter a book title: ");
+                    String uTitle = getUserInput();
+                    System.out.println("Enter a Group Name: ");
+                    String uGroup = getUserInput();
+                    ResultSet rs4 = getBook(conn, uTitle, uGroup);
+                    UIobj.printResultSet(rs4);
                 }
                 else if (u_opt == 7){
                     //Insert new book
                 }
                 else if (u_opt == 8){
                     //Insert new publisher update books
+                    System.out.println("");
+                    System.out.println("Enter a publisher name: ");
+                    String uPubName = getUserInput();
+                    System.out.println("Enter the publisher address: ");
+                    String uAddr = getUserInput();
+                    System.out.println("Enter publisher phone: ");
+                    String uPhone = getUserInput();
+                    System.out.println("Enter publisher email: ");
+                    String uEmail = getUserInput();
+                    Boolean result = insertPub(conn, uPubName, uAddr, uPhone, uEmail);
+                    if (result){
+                        System.out.println("Insert new publisher succesful");
+                    }
+                    System.out.println("Enter the name of the publisher being replaced: ");
+                    System.out.println("");
+                    String oldName = getUserInput();
+                    Boolean buyRes = buyOutPub(conn, uPubName, oldName);
+                    if (buyRes){
+                        System.out.println("Update books publishername successfully");
+                    }
                 }
                 else if (u_opt == 9){
                     //Remove a book
                 }
                 else if (u_opt == 10){
+                    //Exit
                     System.out.println("Good Bye");
                 }
             }
@@ -238,7 +202,7 @@ public class Main {
     public static ResultSet getBook(Connection conn, String uTitle, String uGroupName){
         try{
             PreparedStatement pStmt = conn.prepareStatement(
-                    "Select * from Books where BookTitle = ? or GroupName = ?");
+                    "Select * from Books left outer join WritingGroups using (Groupname) left outer join Publishers using (PublisherName) where BookTitle = ? and GroupName = ?");
             pStmt.setString(1, uTitle);
             pStmt.setString(2, uGroupName);
             ResultSet rs = pStmt.executeQuery();
