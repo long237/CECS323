@@ -62,6 +62,7 @@ public class Main {
 
 //            // Testing getting publisher function
             System.out.println("");
+            System.out.println("Test getting a specific publisher");
             System.out.println("Enter pub name: ");
             String userPub = getUserInput();
             ResultSet rs2 = getPublisher(conn, userPub);
@@ -103,10 +104,10 @@ public class Main {
 //            if (buyRes){
 //                System.out.println("Update books publishername successfully");
 //            }
-            System.out.println("");
-            System.out.println("Rifat");
-            ResultSet rs3 = UIobj.listWritingGroup(conn);
-            UIobj.printResultSet(rs3);
+//            System.out.println("");
+//            System.out.println("Rifat");
+//            ResultSet rs3 = UIobj.listWritingGroup(conn);
+//            UIobj.printResultSet(rs3);
 
             // System.out.println("Printing col ....");
             // ArrayList colList = getColName(conn);
@@ -127,6 +128,7 @@ public class Main {
         } catch (SQLException se) {
             // Handle errors for JDBC
             se.printStackTrace();
+            System.out.println("Error when connecting to database !!!");
         } catch (Exception e) {
             // Handle errors for Class.forName
             e.printStackTrace();

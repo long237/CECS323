@@ -27,7 +27,17 @@ public class UserInterface {
     }
 
     public void printMenu() {
-        System.out.println("Print the menu");
+        System.out.println("Main Menu: \n"
+                + "1.List all groups \n"
+                + "2.List specific group\n"
+                + "3.List all publishers\n"
+                + "4.List specific publisher\n"
+                + "5.List all book titles\n"
+                + "6.List a specifc book\n"
+                + "7.Insert a new book\n"
+                + "8.Insert a publisher\n"
+                + "9.Remove a specific book\n"
+                + "10.Exit\n");
     }
 
     public void printAttri() {
@@ -55,6 +65,7 @@ public class UserInterface {
                     String colValue = rs.getString(i);
                     System.out.println(colValue + " " + rsmd.getColumnName(i));
                 }
+                System.out.println("");
             }
         } catch (SQLException se) {
             // Handle errors for JDBC
