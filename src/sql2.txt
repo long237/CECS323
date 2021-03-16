@@ -29,17 +29,6 @@ create table books(
 --add in cks 
 );
 
-ALTER TABLE publishers
-ALTER COLUMN publisherPhone VARCHAR(20) not null;
-
-drop table publishers;
-
-ALTER TABLE books
-DROP CONSTRAINT publisherName_fk;
-
-ALTER TABLE books
-ADD CONSTRAINT  publisherName_fk foreign key (publisherName) references publishers (publisherName);
-
 /*Data for Writing Groups */
 insert into writinggroups (groupname, headwriter, yearformed, subject) values
 ('WSB', 'John', '2013-01-06', 'Stocks');
@@ -58,16 +47,25 @@ insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPage
 insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPages) values
 ('WSB', 'Diamond Hands', 'Reddit', '2021-02-02', '400');
 
-DELETE FROM publishers
-where publisherName = 'Reddit';
-
 select * from writinggroups;
-select * from books;
 select * from publishers;
+select * from Books;
 
-select * from publishers left outer join books using (PublisherName)
-left outer join WritingGroups on books.GROUPNAME = WritingGroups.GROUPNAME
-where publishername = 'Twitter';
+insert into writinggroups (groupname, headwriter, yearformed, subject) values
+('Critque', 'Kate', '2015-04-23', 'Grammar'),
+('Fiction', 'Marlow', '2008-10-01', 'Science Fiction'),
+('Writers', 'Ryan', '2003-07-02', 'Biographies'),
+('Tal', 'Bailey', '2019-06-18', 'Screen Writing');
 
-select * from publishers left outer join books natural join WritingGroups where PublisherName = ? 
+insert into publishers (publishername, publisheraddress, publisherphone, publisheremail) values
+('Mimi Inc.', 'Mimi.com', '783-443-3209', 'mimiInc@yahoo.com'), 
+('HarperCollins', 'Collins.com', '657-549-0121', 'harpercollins@hotmail.com'),
+('Macmiller', 'Macmiller.com', '999-234-5703', 'macmiller@yahoo.com'),
+('Pearson', 'Pearson.com', '453-283-6093', 'pearson@hotmail.com');
+
+insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPages) values
+('Fiction', 'White Fang', 'Macmiller', '2014-06-22', '200'),
+('Tal', 'Phantom', 'HarperCollins', '2015-09-11', '356'), 
+('GME', 'Stocks', 'Twitter', '2020-07-01', '121'),
+('Critque', 'Grammar 101', 'Mimi Inc.', '2016-02-13', '212');
 
