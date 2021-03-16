@@ -1,4 +1,3 @@
-package CECS323.src;
 
 /** 
  * To change this license header, choose License Headers in Project Properties.
@@ -85,29 +84,37 @@ public class UserInterface {
 
     // List all the data for a group specified by the user
     // ! This includes all the data for the associated books and publishers
-    public static void specifiedData(Connection conn, Statement stmt) {
+    public ResultSet specifiedData(Connection conn, String uGroup) {
         try {
-            // Books natural join writingGroups
-            ResultSet rs = stmt.executeQuery("select * from Books " + "natural join " + "WritingGroups");
-            System.out.println("GroupName " + "HeadWriter " + " YearFormed" + " Subject" + " BookTitle"
-                    + " YearPublished" + " NumberPages");
-            while (rs.next()) {
-                String wgName = rs.getString("GroupName");
-                String wgWriter = rs.getString("HeadWriter");
-                String wgYear = rs.getString("YearFormed");
-                String wgSubject = rs.getString("Subject");
+            // Books left join writingGroups
+            PreparedStatement pStmt = conn.prepareStatement(
+                    "select * from WritingGroups left outer join Books using (GroupName) left outer join Publishers using (PublisherName) where GroupName = ?");
+            pStmt.clearParameters();
+            pStmt.setString(1, uGroup);
+            ResultSet rs = pStmt.executeQuery();
+            System.out.println("DONE!");
+            return rs;
+            // System.out.println("GroupName " + "HeadWriter " + " YearFormed" + " Subject"
+            // + " BookTitle"
+            // + " YearPublished" + " NumberPages");
+            // while (rs.next()) {
+            // String wgName = rs.getString("GroupName");
+            // String wgWriter = rs.getString("HeadWriter");
+            // String wgYear = rs.getString("YearFormed");
+            // String wgSubject = rs.getString("Subject");
 
-                String bBookTitle = rs.getString("BookTitle");
-                String pYearPublished = rs.getString("YearPublished");
-                String bNumberPages = rs.getString("NumberPages");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+            // String bBookTitle = rs.getString("BookTitle");
+            // String pYearPublished = rs.getString("YearPublished");
+            // String bNumberPages = rs.getString("NumberPages");
+            // }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return null;
         }
     }
 
     // where clause = ?
-    public static void whereClause(Connection conn, Statement stmt, ResultSet rs) {
+    public void whereClause(Connection conn, Statement stmt, ResultSet rs) {
         Scanner in = new Scanner(System.in);
         try {
             String whereC = "select * from WritingGroups" + " where YearFormed >= ?";
@@ -159,9 +166,9 @@ public class UserInterface {
     // List all publishers
     public ResultSet listPublishers(Connection conn) {
         try {
-            String ListPublisherscol = "String * from ListPublishers";
+            String sql = "Select * from Publishers";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(ListPublisherscol);
+            ResultSet rs = stmt.executeQuery(sql);
             return rs;
             // while (rs.next()) {
             // String pName = rs.getString("PublisherName");
@@ -178,9 +185,9 @@ public class UserInterface {
     // listing books
     public ResultSet listBook(Connection conn) {
         try {
-            String ListPublisherscol = "String * from Books";
+            String sql = "Select * from Books";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(ListPublisherscol);
+            ResultSet rs = stmt.executeQuery(sql);
             return rs;
             // while (rs.next()) {
             // String bBookTitle = rs.getString("BookTitle");
@@ -193,4 +200,15 @@ public class UserInterface {
         }
     }
 
+    // removes book
+    public void removeBook(Connection conn, String uBook) {
+        String sql = ("delete from " + uBook);
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+            System.out.println(uBook + " was sucessfully deleted");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
