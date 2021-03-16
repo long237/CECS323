@@ -115,6 +115,19 @@ public class Main {
                 }
                 else if (u_opt == 9){
                     //Remove a book
+                    System.out.println("");
+                    System.out.println("Enter a publisher name: ");
+                    String uPubName = getUserInput();
+                    System.out.println("Enter the publisher address: ");
+                    String uAddr = getUserInput();
+                    System.out.println("Enter publisher phone: ");
+                    String uPhone = getUserInput();
+                    System.out.println("Enter publisher email: ");
+                    String uEmail = getUserInput();
+                    Boolean result = insertPub(conn, uPubName, uAddr, uPhone, uEmail);
+                    if (result){
+                        System.out.println("Insert new publisher succesful");
+                    }
                 }
                 else if (u_opt == 10){
                     //Exit
@@ -295,7 +308,7 @@ public class Main {
         }
         catch (SQLException se) {
             // Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
             System.out.println("Inserting publisher name failed. ");
             return false;
         }
