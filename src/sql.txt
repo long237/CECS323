@@ -64,3 +64,9 @@ where publisherName = 'Reddit';
 select * from writinggroups;
 select * from books;
 select * from publishers;
+
+select * from publishers left outer join books using (PublisherName)
+left outer join WritingGroups on books.GROUPNAME = WritingGroups.GROUPNAME
+where publishername = 'Twitter';
+
+select * from publishers left outer join books natural join WritingGroups where PublisherName = ? 

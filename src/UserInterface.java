@@ -27,7 +27,17 @@ public class UserInterface {
     }
 
     public void printMenu() {
-        System.out.println("Print the menu");
+        System.out.println("Main Menu: \n"
+                + "1.List all groups \n"
+                + "2.List specific group\n"
+                + "3.List all publishers\n"
+                + "4.List specific publisher\n"
+                + "5.List all book titles\n"
+                + "6.List a specifc book\n"
+                + "7.Insert a new book\n"
+                + "8.Insert a publisher\n"
+                + "9.Remove a specific book\n"
+                + "10.Exit\n");
     }
 
     public void printAttri() {
@@ -45,6 +55,18 @@ public class UserInterface {
             return "-1";
         }
     }
+    
+    public int getUserInt() {
+        Scanner in = new Scanner(System.in);
+        int user_input = -1;
+        try {
+            user_input = in.nextInt();
+            return user_input;
+        } catch (Exception e) {
+            System.out.println("Invalid menu option, please try again.");
+            return -1;
+        }
+    }
 
     public void printResultSet(ResultSet rs) {
         try {
@@ -55,6 +77,7 @@ public class UserInterface {
                     String colValue = rs.getString(i);
                     System.out.println(colValue + " " + rsmd.getColumnName(i));
                 }
+                System.out.println("");
             }
         } catch (SQLException se) {
             // Handle errors for JDBC
@@ -70,12 +93,6 @@ public class UserInterface {
             String WritingGroupscol = "Select * from WritingGroups";
             ResultSet rs = stmt.executeQuery(WritingGroupscol);
             return rs;
-            // while (rs.next()) {
-            // String wgName = rs.getString("GroupName");
-            // String wgWriter = rs.getString("HeadWriter");
-            // String wgYear = rs.getString("YearFormed");
-            // String wgSubject = rs.getString("Subject");
-            // }
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -178,6 +195,7 @@ public class UserInterface {
             // }
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("Failed to list publisher");
             return null;
         }
     }
@@ -196,6 +214,7 @@ public class UserInterface {
             // }
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("Failed to list book");
             return null;
         }
     }
