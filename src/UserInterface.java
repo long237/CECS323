@@ -191,6 +191,7 @@ public class UserInterface {
             }
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("Failed to list publisher");
         }
     }
 
@@ -207,6 +208,7 @@ public class UserInterface {
             }
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("Failed to list book");
         }
     }
 
