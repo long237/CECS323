@@ -29,17 +29,6 @@ create table books(
 --add in cks 
 );
 
-ALTER TABLE publishers
-ALTER COLUMN publisherPhone VARCHAR(20) not null;
-
-drop table publishers;
-
-ALTER TABLE books
-DROP CONSTRAINT publisherName_fk;
-
-ALTER TABLE books
-ADD CONSTRAINT  publisherName_fk foreign key (publisherName) references publishers (publisherName);
-
 /*Data for Writing Groups */
 insert into writinggroups (groupname, headwriter, yearformed, subject) values
 ('WSB', 'John', '2013-01-06', 'Stocks');
@@ -58,16 +47,16 @@ insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPage
 insert into Books(groupname, booktitle, publisherName, yearPublished, NumberPages) values
 ('WSB', 'Diamond Hands', 'Reddit', '2021-02-02', '400');
 
-DELETE FROM publishers
-where publisherName = 'Reddit';
+--DELETE FROM publishers
+--where publisherName = 'Reddit';
 
 select * from writinggroups;
 select * from books;
 select * from publishers;
 
-select * from publishers left outer join books using (PublisherName)
-left outer join WritingGroups on books.GROUPNAME = WritingGroups.GROUPNAME
-where publishername = 'Twitter';
+--select * from publishers left outer join books using (PublisherName)
+--left outer join WritingGroups on books.GROUPNAME = WritingGroups.GROUPNAME
+--where publishername = 'Twitter';
 
-select * from publishers left outer join books natural join WritingGroups where PublisherName = ? 
+--select * from publishers left outer join books natural join WritingGroups where PublisherName = ? 
 
