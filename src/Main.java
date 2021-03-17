@@ -166,7 +166,8 @@ public class Main {
                     System.out.println("Error when connecting to database !!!");
                 } catch (Exception e) {
                     // Handle errors for Class.forName
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    System.out.println("Error for Class.forName!!");
                 }
             }
             else if (main_opt == 2){
@@ -286,7 +287,8 @@ public class Main {
             return colList;
         } catch (SQLException se) {
             // Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
+            System.out.println("Failed to get column names!");
             return null;
         }
     }
@@ -373,7 +375,7 @@ public class Main {
             return true;
         }
         catch (SQLException se) {
-            se.printStackTrace();
+            //se.printStackTrace();
             System.out.println("Inserting book failed. ");
             return false;
         }
