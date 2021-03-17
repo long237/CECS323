@@ -58,6 +58,7 @@ public class Main {
 
                     int u_opt = -1;
                     while (u_opt != 10) {
+                        System.out.println();
                         UIobj.printMenu();
                         u_opt = getMenuOpt();
                         if (u_opt == 1) {
@@ -90,7 +91,7 @@ public class Main {
                         } else if (u_opt == 5) {
                             // List all book titles
                             System.out.println("");
-                            System.out.println("Testing print all book titles");
+                            //System.out.println("Testing print all book titles");
                             ResultSet rs3 = getAllBooks(conn);
                             UIobj.printResultSet(rs3);
                         } else if (u_opt == 6) {

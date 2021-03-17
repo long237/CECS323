@@ -67,42 +67,14 @@ public class UserInterface {
         }
     }
 
-    public void printResultSet(ResultSet rs) {
-        try {
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int numCol = rsmd.getColumnCount();
-            while (rs.next()) {
-                for (int i = 1; i <= numCol; i++) {
-                    String colValue = rs.getString(i);
-                    System.out.println(colValue + " " + rsmd.getColumnName(i));
-                }
-                System.out.println("");
-            }
-        } catch (SQLException se) {
-            // Handle errors for JDBC
-            //se.printStackTrace();
-            System.out.println("Error when printing result set!");
-        }
-
-    }
-    
-    //Better looking print function
 //    public void printResultSet(ResultSet rs) {
 //        try {
 //            ResultSetMetaData rsmd = rs.getMetaData();
 //            int numCol = rsmd.getColumnCount();
-//            String space = String.format("%-" + 15 + "s", "");
-//            String row_sp = String.format("%-" + 20 + "s", "");
-//            for (int j = 1; j <= numCol; j++){
-//                System.out.print(rsmd.getColumnName(j));
-//                System.out.print(space);
-//            }
-//            System.out.println("");
 //            while (rs.next()) {
 //                for (int i = 1; i <= numCol; i++) {
 //                    String colValue = rs.getString(i);
-//                    System.out.print(colValue);
-//                    System.out.print(row_sp);
+//                    System.out.println(colValue + " " + rsmd.getColumnName(i));
 //                }
 //                System.out.println("");
 //            }
@@ -111,7 +83,35 @@ public class UserInterface {
 //            //se.printStackTrace();
 //            System.out.println("Error when printing result set!");
 //        }
+//
 //    }
+    
+    //Better looking print function
+    public void printResultSet(ResultSet rs) {
+        try {
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numCol = rsmd.getColumnCount();
+            //String space = String.format("%-" + 15 + "s", "");
+            //String row_sp = String.format("%-" + 20 + "s", "");
+            for (int j = 1; j <= numCol; j++){
+                System.out.format("%-25s",rsmd.getColumnName(j));
+            }
+            System.out.println("");
+            while (rs.next()) {
+                for (int i = 1; i <= numCol; i++) {
+                    String colValue = rs.getString(i);
+                    //System.out.print(colValue);
+                    System.out.format("%-25s",colValue);
+//                    System.out.print(row_sp);
+                }
+                System.out.println("");
+            }
+        } catch (SQLException se) {
+            // Handle errors for JDBC
+            //se.printStackTrace();
+            System.out.println("Error when printing result set!");
+        }
+    }
 
     // List all writing groups
     public ResultSet listWritingGroup(Connection conn) {
