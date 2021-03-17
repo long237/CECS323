@@ -32,6 +32,11 @@ public class UserInterface {
                 + "6.List a specifc book\n" + "7.Insert a new book\n" + "8.Insert a publisher\n"
                 + "9.Remove a specific book\n" + "10.Exit\n");
     }
+    
+    public void printDBMenu(){
+        System.out.println("1.Connect to the DB \n" +
+                "2.Exit \n");
+    }
 
     public void printAttri() {
         System.out.println("Enter an attribute to display (N to stop): ");
