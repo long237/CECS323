@@ -170,11 +170,17 @@ public class UserInterface {
             pStmt.clearParameters();
             pStmt.setString(1, uBook);
             pStmt.setString(2, uBook2);
-            pStmt.executeUpdate();
-            System.out.println(uBook + " was sucessfully deleted");
+            int result = pStmt.executeUpdate();
+            System.out.println("Affected statement: " + result);
+            if (result > 0){
+                System.out.println(uBook + " was sucessfully deleted");
+            }
+            else {
+                System.out.println("Failed to delete " + uBook);
+            }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("Sorry, invalid book inputted");
         }
     }

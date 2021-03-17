@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class main {
+public class Main {
     static String USER;
     static String PASS;
     static String DBNAME;
@@ -23,7 +23,7 @@ public class main {
 
     public static void main(String[] args) {
         UserInterface UIobj = new UserInterface();
-
+        
         // Asking for DB name
         UIobj.printDBprompt();
         DBNAME = getUserInput();
@@ -74,8 +74,8 @@ public class main {
                     ResultSet rs3 = UIobj.listPublishers(conn);
                     UIobj.printResultSet(rs3);
                 } else if (u_opt == 4) {
+                    //List specific publisher
                     System.out.println("");
-                    System.out.println("Test getting a specific publisher");
                     System.out.println("Enter pub name to display data: ");
                     String userPub = getUserInput();
                     ResultSet rs4 = getPublisher(conn, userPub);
@@ -154,7 +154,7 @@ public class main {
             conn.close();
         } catch (SQLException se) {
             // Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
             System.out.println("Error when connecting to database !!!");
         } catch (Exception e) {
             // Handle errors for Class.forName
@@ -207,7 +207,8 @@ public class main {
             return rs;
         } catch (SQLException se) {
             // Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
+            System.out.println("Failed to get publisher! ");
             return null;
         }
     }
@@ -221,7 +222,8 @@ public class main {
             return rs;
         } catch (SQLException se) {
             // Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
+            System.out.println("Failed to list all book titles!");
             return null;
         }
     }
@@ -236,7 +238,12 @@ public class main {
             return rs;
         } catch (SQLException se) {
             // Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
+            System.out.println("Failed to get a specific book!");
+            return null;
+        }
+        catch (Exception e){
+            System.out.println("Failed to get a specific book!");
             return null;
         }
     }
@@ -300,7 +307,7 @@ public class main {
             return true;
         } catch (SQLException se) {
             // Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
             System.out.println("Buying out a publisher operation failed !!!");
             return false;
         }
@@ -321,7 +328,7 @@ public class main {
 
         } catch (SQLException se) {
             // Handle errors for JDBC
-            se.printStackTrace();
+            //se.printStackTrace();
             System.out.println("Inserting publisher name failed. ");
             return false;
         }
@@ -345,6 +352,10 @@ public class main {
         catch (SQLException se) {
             se.printStackTrace();
             System.out.println("Inserting book failed. ");
+            return false;
+        }
+        catch (Exception e){
+            System.out.println("Invalid input");
             return false;
         }
     }
