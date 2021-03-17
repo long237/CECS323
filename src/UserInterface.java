@@ -34,8 +34,9 @@ public class UserInterface {
     }
     
     public void printDBMenu(){
-        System.out.println("1.Connect to the DB \n" +
-                "2.Exit \n");
+        System.out.println("Java DB Menu: \n" 
+                + "1.Connect to the DB \n" 
+                +"2.Exit \n");
     }
 
     public void printAttri() {
